@@ -1,0 +1,53 @@
+# Binary for the app (not needed in version control)
+/server
+/server.exe
+/app
+app
+
+# Dependencies
+/vendor/
+/Godeps/
+
+# Configuration files
+.env
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Go
+*.o
+*.a
+*.so
+/obj/
+/testbin/
+*.[568vq]
+[568vq].out
+
+*.exe
+*.test
+*.prof
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Dependency directories (remove the comment below to include it)
+# vendor/
+
+# IDEs
+/.idea
+*.iml
+
+# Log files
+*.log
+
+# Generated files
+/bin
