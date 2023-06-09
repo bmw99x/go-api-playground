@@ -12,11 +12,16 @@ type UserRepository interface {
 	AddUser(user User) (string, error)
 	UpdateUser(id string, newUser User) (User, error)
 	DeleteUser(id string) error
+	GenerateRepository() UserRepository
 }
 
 type UserRepositoryImpl struct {
 	Users  []User
 	NextID int
+}
+
+func GenerateRepository() UserRepositoryImpl {
+	return UserRepositoryImpl{}
 }
 
 func (u *UserRepositoryImpl) GetAllUsers() []User {

@@ -26,4 +26,4 @@ docker-down:
 
 # Test the Go app
 test:
-    go test ./...
+    cd tests && go test -v

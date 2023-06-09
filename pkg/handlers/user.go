@@ -8,7 +8,7 @@ import (
 	. "playground/pkg/repository"
 )
 
-var userRepo = UserRepositoryImpl{}
+var userRepo = GenerateRepository()
 
 // ListUsers PingExample godoc
 // @Summary List users
