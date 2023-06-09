@@ -15,14 +15,16 @@ paths:
     get:
       consumes:
       - application/json
-      description: do ping
+      description: List all users
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            type: string
+            items:
+              $ref: '#/definitions/models.User'
+            type: array
       summary: List users
       tags:
       - Users

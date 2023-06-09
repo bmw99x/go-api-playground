@@ -18,7 +18,7 @@ const docTemplate = `{
     "paths": {
         "/users": {
             "get": {
-                "description": "do ping",
+                "description": "List all users",
                 "consumes": [
                     "application/json"
                 ],
@@ -33,7 +33,10 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "string"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.User"
+                            }
                         }
                     }
                 }

@@ -9,11 +9,11 @@ import (
 // ListUsers PingExample godoc
 // @Summary List users
 // @Schemes
-// @Description do ping
+// @Description List all users
 // @Tags Users
 // @Accept json
 // @Produce json
-// @Success 200 {string} Helloworld
+// @Success 200 {object} []models.User
 // @Router /users [get]
 func ListUsers(c *gin.Context) {
 	users := models.GetAllUsers() // Replace with your actual function to retrieve users
