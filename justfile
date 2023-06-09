@@ -10,11 +10,11 @@ deps:
 
 # Build the Go app
 build:
-    go build -o app .
+    go build -o app ./cmd
 
 # Run the Go app
 run:
-    go run .
+	go run ./cmd/main.go
 
 # Build and Run the Docker container
 docker-up:
