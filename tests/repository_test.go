@@ -1,7 +1,6 @@
 package tests
 
 import (
-	"fmt"
 	. "playground/pkg/models"
 	. "playground/pkg/repository"
 	"testing"
@@ -46,9 +45,72 @@ func TestGetAllUsers(t *testing.T) {
 	}
 	var id, _ = repo.AddUser(user)
 	users := repo.GetAllUsers()
-	fmt.Println(id)
 	if users[0].ID != id {
 		t.Errorf("Expected user ID to be %v, got %v", id, "0")
 	}
+}
 
+func TestGetUserByID(t *testing.T) {
+	/**
+	Given a list of users created by
+		- AddUser
+	When GetUserByID is called with a valid ID
+	Then the user with the given ID is returned
+	*/
+	repo := GenerateRepository()
+	expectedUser := User{
+		Name:     "Test",
+		Email:    "test@gmail.com",
+		Password: "test",
+	}
+	var id, _ = repo.AddUser(expectedUser)
+	actualUser, _ := repo.GetUserByID(id)
+	if actualUser.ID != id {
+		t.Errorf("Expected user ID to be %v, got %v", id, actualUser.ID)
+	}
+}
+
+func TestGetUserByIDNotFound(t *testing.T) {
+	/**
+	Given no users created
+	When GetUserByID is called with an invalid ID (i.e. any ID)
+	Then an error is returned
+	*/
+	repo := GenerateRepository()
+	_ = User{
+		Name:     "Test",
+		Email:    "test@gmail.com",
+		Password: "test",
+	}
+	_, err := repo.GetUserByID("1")
+	if err.Error() != "User not found" {
+		t.Errorf("Expected error to be %v, got %v", "User not found", err.Error())
+	}
+}
+
+func TestUpdateUser(t *testing.T) {
+	/**
+	Given a user created by
+		- AddUser
+	When UpdateUser is called with a valid ID
+	and a modified user
+	Then the user with the given ID is updated
+	*/
+	repo := GenerateRepository()
+	expectedUser := User{
+		Name:     "Test",
+		Email:    "test@gmail.com",
+		Password: "test",
+	}
+	id, _ := repo.AddUser(expectedUser)
+	modifiedUser := User{
+		ID:       id,
+		Name:     "Test2",
+		Email:    "test123@gmail.com",
+		Password: "test",
+	}
+	actualUpdatedUser, _ := repo.UpdateUser(id, modifiedUser)
+	if modifiedUser != actualUpdatedUser {
+		t.Errorf("Expected user to be %v, got %v", modifiedUser, actualUpdatedUser)
+	}
 }
