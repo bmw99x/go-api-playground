@@ -24,6 +24,7 @@ docker-up:
 docker-down:
     docker-compose down
 
+
 # Test the Go app
 test:
     cd tests && go test -v

@@ -1,23 +1,17 @@
-# Use the official Golang image to create a build artifact.
-FROM golang:1.17 as builder
+# Start from a Debian-based image with the latest version of Go installed
+# and a workspace (GOPATH) configured at /go.
+FROM golang:latest
 
-# Set the Current Working Directory inside the container
-WORKDIR /app
-
-# Download dependencies.
-# Copy go mod and sum files
-COPY go.mod go.sum ./
-
-# Download all dependencies. Dependencies will be cached if the go.mod and go.sum files are not changed
-RUN go mod download
-
-# Copy the source from the current directory to the Working Directory inside the container
+# Copy the local package files to the container's workspace.
+WORKDIR /go/src/app
 COPY . .
 
-# Build the Go app
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o server .
+# Build the command inside the container.
+# (You may fetch or manage dependencies here,
+# either manually or with a tool like "godep".)
+RUN go mod tidy
+RUN go build -o app ./cmd
+## Run the command by default when the container starts.
+CMD ["./app"]
 
-# Start a new stage from scratch
-FROM alpine:latest
-
-RUN apk --no-cache add
+EXPOSE 8080

@@ -1,0 +1,6 @@
+database:
+  variations:
+    use-postgres: true
+    use-in-memory: false
+  defaultRule:
+    variation: use-postgres

@@ -2,13 +2,18 @@ package handlers
 
 import (
 	"fmt"
+	//"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"playground/pkg/models"
+	//"playground/pkg/models"
 	. "playground/pkg/repository"
+	. "playground/pkg/helpers"
 )
 
-var userRepo = GenerateRepository()
+var useDb = GetFeatureFlagValue("database")
+
+var userRepo = GenerateRepository(useDb)
+
 
 // ListUsers PingExample godoc
 // @Summary List users
@@ -20,7 +25,8 @@ var userRepo = GenerateRepository()
 // @Success 200 {object} []models.User
 // @Router /users [get]
 func ListUsers(c *gin.Context) {
-	users := userRepo.GetAllUsers() // Replace with your actual function to retrieve users
+	users := userRepo.GetAllUsers()
+	fmt.Println("Using database: ", useDb)
 
 	c.JSON(http.StatusOK, gin.H{"data": users})
 }
@@ -34,21 +40,21 @@ func ListUsers(c *gin.Context) {
 // @Param user body models.User true "User"
 // @Success 201 {object} models.User
 // @Router /users [post]
-func AddUser(c *gin.Context) {
-	var user models.User
-	if err := c.ShouldBindJSON(&user); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	id, err := userRepo.AddUser(user) // Replace with your actual function to add a new user
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Could not add user"})
-		return
-	}
-
-	c.JSON(http.StatusCreated, gin.H{"id": id, "data": user})
-}
+//func AddUser(c *gin.Context) {
+//	var user models.User
+//	if err := c.ShouldBindJSON(&user); err != nil {
+//		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+//		return
+//	}
+//
+//	id, err := userRepo.AddUser(user) // Replace with your actual function to add a new user
+//	if err != nil {
+//		c.JSON(http.StatusInternalServerError, gin.H{"error": "Could not add user"})
+//		return
+//	}
+//
+//	c.JSON(http.StatusCreated, gin.H{"id": id, "data": user})
+//}
 
 // UpdateUser PingExample godoc
 // @Summary Update a user
@@ -60,23 +66,23 @@ func AddUser(c *gin.Context) {
 // @Param user body models.User true "User"
 // @Success 200 {object} models.User
 // @Router /users/{id} [put]
-func UpdateUser(c *gin.Context) {
-	id := c.Param("id")
-
-	var user models.User
-	if err := c.ShouldBindJSON(&user); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	user, err := userRepo.UpdateUser(id, user) // Replace with your actual function to update a user
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Could not update user"})
-		return
-	}
-
-	c.JSON(http.StatusOK, gin.H{"data": user})
-}
+//func UpdateUser(c *gin.Context) {
+//	id := c.Param("id")
+//
+//	var user models.User
+//	if err := c.ShouldBindJSON(&user); err != nil {
+//		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+//		return
+//	}
+//
+//	user, err := userRepo.UpdateUser(id, user) // Replace with your actual function to update a user
+//	if err != nil {
+//		c.JSON(http.StatusInternalServerError, gin.H{"error": "Could not update user"})
+//		return
+//	}
+//
+//	c.JSON(http.StatusOK, gin.H{"data": user})
+//}
 
 // DeleteUser PingExample godoc
 // @Summary Delete a user
@@ -86,13 +92,13 @@ func UpdateUser(c *gin.Context) {
 // @Produce  json
 // @Param id path string true "User ID"
 // @Router /users/{id} [delete]
-func DeleteUser(c *gin.Context) {
-	id := c.Param("id")
-
-	if err := userRepo.DeleteUser(id); err != nil { // Replace with your actual function to delete a user
-		c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Errorf("Could not delete user due to:", err)})
-		return
-	}
-
-	c.JSON(http.StatusNoContent, gin.H{})
-}
+//func DeleteUser(c *gin.Context) {
+//	id := c.Param("id")
+//
+//	if err := userRepo.DeleteUser(id); err != nil { // Replace with your actual function to delete a user
+//		c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Errorf("Could not delete user due to:", err)})
+//		return
+//	}
+//
+//	c.JSON(http.StatusNoContent, gin.H{})
+//}

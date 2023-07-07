@@ -4,8 +4,8 @@ import (
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
-	docs "playground/docs"
-	handlers "playground/pkg/handlers"
+	"playground/docs"
+	"playground/pkg/handlers"
 )
 
 func main() {
@@ -16,9 +16,9 @@ func main() {
 	api := r.Group("/api/v1")
 	{
 		api.GET("/users", handlers.ListUsers)
-		api.POST("/users", handlers.AddUser)
-		api.PUT("/users/:id", handlers.UpdateUser)
-		api.DELETE("/users/:id", handlers.DeleteUser)
+		//api.POST("/users", handlers.AddUser)
+		//api.PUT("/users/:id", handlers.UpdateUser)
+		//api.DELETE("/users/:id", handlers.DeleteUser)
 	}
 
 	// Serve Swagger documentation

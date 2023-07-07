@@ -13,6 +13,7 @@ func TestAddUser(t *testing.T) {
 	Then the user is added to the repository
 	And the user is returned
 	*/
+	t.Parallel()
 	repo := GenerateRepository()
 	user := User{
 		ID:       "1",
@@ -37,6 +38,7 @@ func TestGetAllUsers(t *testing.T) {
 	When GetAllUsers is called
 	Then the list of users is returned
 	*/
+	t.Parallel()
 	repo := GenerateRepository()
 	user := User{
 		Name:     "Test",
@@ -57,6 +59,7 @@ func TestGetUserByID(t *testing.T) {
 	When GetUserByID is called with a valid ID
 	Then the user with the given ID is returned
 	*/
+	t.Parallel()
 	repo := GenerateRepository()
 	expectedUser := User{
 		Name:     "Test",
@@ -76,6 +79,7 @@ func TestGetUserByIDNotFound(t *testing.T) {
 	When GetUserByID is called with an invalid ID (i.e. any ID)
 	Then an error is returned
 	*/
+	t.Parallel()
 	repo := GenerateRepository()
 	_ = User{
 		Name:     "Test",
@@ -96,6 +100,7 @@ func TestUpdateUser(t *testing.T) {
 	and a modified user
 	Then the user with the given ID is updated
 	*/
+	t.Parallel()
 	repo := GenerateRepository()
 	expectedUser := User{
 		Name:     "Test",
@@ -113,4 +118,27 @@ func TestUpdateUser(t *testing.T) {
 	if modifiedUser != actualUpdatedUser {
 		t.Errorf("Expected user to be %v, got %v", modifiedUser, actualUpdatedUser)
 	}
+}
+
+func TestDeleteUser(t *testing.T) {
+	/**
+	Given a user created by
+		- AddUser
+	When DeleteUser is called with a valid ID
+	Then the user with the given ID is deleted
+	*/
+	t.Parallel()
+	repo := GenerateRepository()
+	expectedUser := User{
+		Name:     "Test",
+		Email:    "test@gmail.com",
+		Password: "test",
+	}
+	id, _ := repo.AddUser(expectedUser)
+	_ = repo.DeleteUser(id)
+	_, err := repo.GetUserByID(id)
+	if err.Error() != "User not found" {
+		t.Errorf("Expected error to be %v, got %v", "User not found", err.Error())
+	}
+
 }

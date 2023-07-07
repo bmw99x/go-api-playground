@@ -6,13 +6,20 @@ import (
 	"strconv"
 )
 
+// User repositories must implement these methods
 type UserRepository interface {
 	GetAllUsers() []User
-	GetUserByID(id string) (User, error)
-	AddUser(user User) (string, error)
-	UpdateUser(id string, newUser User) (User, error)
-	DeleteUser(id string) error
-	GenerateRepository() UserRepository
+	//GetUserByID(id string) (User, error)
+	//AddUser(user User) (string, error)
+	//UpdateUser(id string, newUser User) (User, error)
+	//DeleteUser(id string) error
+}
+
+func GenerateRepository(useDb bool) UserRepository {
+	if useDb {
+		return DBUserRepositoryImpl{}
+	}
+	return UserRepositoryImpl{}
 }
 
 type UserRepositoryImpl struct {
@@ -20,11 +27,37 @@ type UserRepositoryImpl struct {
 	NextID int
 }
 
-func GenerateRepository() UserRepositoryImpl {
-	return UserRepositoryImpl{}
+// Database definitions
+type DBUserRepositoryImpl struct {}
+
+func (u DBUserRepositoryImpl) GetAllUsers() []User {
+	//TODO implement me
+	panic("implement me")
 }
 
-func (u *UserRepositoryImpl) GetAllUsers() []User {
+func (u *DBUserRepositoryImpl) GetUserByID(id string) (interface{}, error) {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (u *DBUserRepositoryImpl) AddUser(user interface{}) (string, error) {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (u *DBUserRepositoryImpl) UpdateUser(id string, newUser interface{}) (interface{}, error) {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (u *DBUserRepositoryImpl) DeleteUser(id string) error {
+	//TODO implement me
+	panic("implement me")
+}
+
+
+// In memory definitions
+func (u UserRepositoryImpl) GetAllUsers() []User {
 	return u.Users
 }
 
